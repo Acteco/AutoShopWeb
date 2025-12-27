@@ -1,0 +1,65 @@
+﻿@page
+@model AutoShopWeb.Pages.ServicesModel
+@{
+    ViewData["Title"] = "Услуги";
+}
+
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="mb-0">Услуги</h2>
+</div>
+
+<form method="get" class="card shadow-sm mb-3">
+    <div class="card-body">
+        <div class="row g-2 align-items-end">
+            <div class="col-md-6">
+                <label class="form-label">Поиск (название)</label>
+                <input class="form-control" name="q" value="@Model.Q" placeholder="например: диагностика, тонировка" />
+            </div>
+
+            <div class="col-md-2">
+                <label class="form-label">Цена от</label>
+                <input class="form-control" name="priceFrom" type="number" step="0.01" value="@(Model.PriceFrom?.ToString() ?? "")" />
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Цена до</label>
+                <input class="form-control" name="priceTo" type="number" step="0.01" value="@(Model.PriceTo?.ToString() ?? "")" />
+            </div>
+
+            <div class="col-md-2">
+                <label class="form-label">Сортировка</label>
+                <select class="form-select" name="sort">
+                    <option value="name" selected="@(Model.Sort == "name")">Название (А-Я)</option>
+                    <option value="price_asc" selected="@(Model.Sort == "price_asc")">Цена ↑</option>
+                    <option value="price_desc" selected="@(Model.Sort == "price_desc")">Цена ↓</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <button class="btn btn-primary w-100" type="submit">Применить</button>
+            </div>
+            <div class="col-md-3">
+                <a class="btn btn-outline-secondary w-100" href="/Services">Сброс</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="text-muted mb-2">Найдено: <b>@Model.Total</b></div>
+
+<table class="table table-striped table-hover align-middle">
+    <thead>
+        <tr>
+            <th>Услуга</th>
+            <th style="width:200px">Стоимость</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in Model.Services)
+        {
+            <tr>
+                <td>@s.ServiceType</td>
+                <td>@s.Cost</td>
+            </tr>
+        }
+    </tbody>
+</table>

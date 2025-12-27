@@ -1,0 +1,100 @@
+# =========================
+# Visual Studio / VS Code
+# =========================
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# =========================
+# Build outputs
+# =========================
+bin/
+obj/
+**/bin/
+**/obj/
+
+# Publish
+publish/
+**/publish/
+app.publish/
+
+# =========================
+# ASP.NET Core / logs
+# =========================
+logs/
+*.log
+
+# IIS Express
+.vs/config/
+.vs/ProjectEvaluation/
+
+# =========================
+# NuGet
+# =========================
+packages/
+*.nupkg
+*.snupkg
+.nuget/
+!.nuget/NuGet.Config
+!.nuget/NuGet.targets
+!.nuget/NuGet.props
+
+# =========================
+# OS files
+# =========================
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# =========================
+# User secrets / env
+# =========================
+secrets.json
+*secrets*.json
+.env
+.env.*
+appsettings.*.json
+!appsettings.json
+!appsettings.Development.json
+
+# =========================
+# EF Core / local DB
+# =========================
+*.mdf
+*.ldf
+
+# =========================
+# Node / frontend
+# =========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================
+# Docker
+# =========================
+**/docker-data/
+**/data/
+**/mssql-data/
+**/*.bak
+
+# =========================
+# Misc
+# =========================
+*.cache
+*.tmp
+*.temp
+*.swp
+*.bak
+*.orig

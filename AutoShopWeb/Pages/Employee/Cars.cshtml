@@ -1,0 +1,92 @@
+﻿@page
+@model AutoShopWeb.Pages.Employee.CarsCrudModel
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Employee,Admin")]
+@{
+    ViewData["Title"] = "Автомобили (CRUD)";
+}
+
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="mb-0">Автомобили (CRUD)</h2>
+    <a class="btn btn-outline-secondary" href="/Employee/Dashboard">Назад</a>
+</div>
+
+@if (!string.IsNullOrWhiteSpace(Model.Message))
+{
+    <div class="alert alert-info">@Model.Message</div>
+}
+
+<div class="card shadow-sm mb-3">
+    <div class="card-body">
+        <form method="post" asp-page-handler="Create" class="row g-2 align-items-end">
+            <div class="col-md-4">
+                <label class="form-label">Модель</label>
+                <input class="form-control" asp-for="CreateModel" />
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Год</label>
+                <input class="form-control" asp-for="CreateYear" type="number" />
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Пробег</label>
+                <input class="form-control" asp-for="CreateMileage" type="number" />
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Цена</label>
+                <input class="form-control" asp-for="CreatePrice" type="number" step="0.01" />
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Статус</label>
+                <select class="form-select" asp-for="CreateStatus">
+                    <option>В наличии</option>
+                    <option>Продан</option>
+                    <option>Зарезервирован</option>
+                    <option>На сервисе</option>
+                </select>
+            </div>
+            <div class="col-12">
+                <button class="btn btn-primary">Добавить</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table table-striped table-hover align-middle">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Модель</th>
+            <th>Год</th>
+            <th>Пробег</th>
+            <th>Цена</th>
+            <th>Статус</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model.Cars)
+        {
+            <tr>
+                <td>@c.CarId</td>
+                <td>@c.Model</td>
+                <td>@c.ReleaseYear</td>
+                <td>@c.Mileage</td>
+                <td>@c.Price</td>
+                <td>@c.Status</td>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-outline-primary" href="/Employee/Cars/Edit?id=@c.CarId">Редактировать</a>
+
+                    <form method="post" asp-page-handler="Delete" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@c.CarId" />
+                        <button class="btn btn-sm btn-outline-danger"
+                                type="submit"
+                                onclick="return confirm('Удалить авто?')">
+                            Удалить
+                        </button>
+                    </form>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

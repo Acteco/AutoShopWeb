@@ -1,0 +1,75 @@
+﻿@page
+@model AutoShopWeb.Pages.Admin.CreateEmployeeUserModel
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles="Admin")]
+@{
+    ViewData["Title"] = "Создать сотрудника";
+}
+
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h2 class="mb-0">Создать сотрудника</h2>
+  <a class="btn btn-outline-secondary" href="/Admin/Users">К пользователям</a>
+</div>
+
+@if (!string.IsNullOrWhiteSpace(Model.Error))
+{
+  <div class="alert alert-danger">@Model.Error</div>
+}
+@if (!string.IsNullOrWhiteSpace(Model.Success))
+{
+  <div class="alert alert-success">@Model.Success</div>
+}
+
+<form method="post" class="card shadow-sm">
+  @Html.AntiForgeryToken()
+  <div class="card-body">
+    <div class="row g-3">
+
+      <div class="col-md-4">
+        <label class="form-label">Фамилия</label>
+        <input class="form-control" name="LastName" value="@Model.LastName" />
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Имя</label>
+        <input class="form-control" name="FirstName" value="@Model.FirstName" />
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Отчество</label>
+        <input class="form-control" name="MiddleName" value="@Model.MiddleName" />
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label">Должность</label>
+                <select class="form-select" asp-for="Position" asp-items="Model.Positions"></select>
+
+      </div>
+
+      <div class="col-md-4">
+        <label class="form-label">Телефон</label>
+        <input class="form-control" name="Phone" value="@Model.Phone" placeholder="+7 900 000-00-00" />
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Email</label>
+        <input class="form-control" name="Email" value="@Model.Email" />
+      </div>
+
+      <hr class="my-2"/>
+
+      <div class="col-md-6">
+        <label class="form-label">Логин</label>
+        <input class="form-control" name="Login" value="@Model.Login" />
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Пароль</label>
+        <input class="form-control" name="Password" type="password" />
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Повтор</label>
+        <input class="form-control" name="Password2" type="password" />
+      </div>
+
+      <div class="col-12">
+        <button class="btn btn-primary w-100" type="submit">Создать</button>
+      </div>
+    </div>
+  </div>
+</form>

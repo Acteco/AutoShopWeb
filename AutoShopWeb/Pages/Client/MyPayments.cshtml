@@ -1,0 +1,43 @@
+﻿@page
+@model AutoShopWeb.Pages.Client.MyPaymentsModel
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Client")]
+@{
+    ViewData["Title"] = "Мои оплаты";
+}
+
+<h2 class="mb-3">Мои оплаты</h2>
+
+@if (Model.Items.Count == 0)
+{
+    <div class="alert alert-info">Оплат пока нет.</div>
+}
+else
+{
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Договор</th>
+                <th>Дата</th>
+                <th>Сумма</th>
+                <th>Статус</th>
+                <th>Способ</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model.Items)
+            {
+                <tr>
+                    <td>@x.ContractNumber</td>
+                    <td>@x.PayDate</td>
+                    <td>@x.Amount</td>
+                    <td>
+                        <span class="badge @(x.Status == "Оплачен" ? "bg-success" : x.Status == "Ожидает" ? "bg-warning text-dark" : "bg-secondary")">
+                            @x.Status
+                        </span>
+                    </td>
+                    <td>@x.PaymentMethod</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

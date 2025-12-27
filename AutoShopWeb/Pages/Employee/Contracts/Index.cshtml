@@ -1,0 +1,53 @@
+﻿@page
+@model AutoShopWeb.Pages.Employee.Contracts.IndexModel
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Employee,Admin")]
+@{
+    ViewData["Title"] = "Договоры";
+}
+
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="mb-0">Договоры</h2>
+    <div class="d-flex gap-2">
+        <a class="btn btn-primary" href="/Employee/Contracts/Create">Создать договор</a>
+        <a class="btn btn-outline-secondary" href="/Employee/Dashboard">Назад</a>
+    </div>
+</div>
+
+<table class="table table-striped table-hover align-middle">
+    <thead>
+        <tr>
+            <th>№</th>
+            <th>Дата</th>
+            <th>Клиент</th>
+            <th>Авто</th>
+            <th>Сумма</th>
+            <th>Оплата</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var x in Model.Items)
+        {
+            <tr>
+                <td>@x.ContractNumber</td>
+                <td>@x.CreatedAt</td>
+                <td>@x.ClientFio</td>
+                <td>@x.CarModel</td>
+                <td>@x.TotalAmount</td>
+                <td>@x.PaymentMethod</td>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-outline-secondary"
+                       href="/Employee/Payments?contractNumber=@x.ContractNumber">
+                        Оплаты
+                    </a>
+
+                    <a class="btn btn-sm btn-outline-primary"
+                       href="/Employee/Payments/Create?contractNumber=@x.ContractNumber">
+                        Добавить оплату
+                    </a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

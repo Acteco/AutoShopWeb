@@ -1,0 +1,39 @@
+﻿@page
+@model AutoShopWeb.Pages.Client.MyContractsModel
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Client")]
+@{
+    ViewData["Title"] = "Мои договоры";
+}
+
+<h2 class="mb-3">Мои договоры</h2>
+
+@if (Model.Items.Count == 0)
+{
+    <div class="alert alert-info">Пока нет договоров.</div>
+}
+else
+{
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Дата</th>
+                <th>Авто</th>
+                <th>Сумма</th>
+                <th>Способ оплаты</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var x in Model.Items)
+            {
+                <tr>
+                    <td>@x.ContractNumber</td>
+                    <td>@x.CreatedAt</td>
+                    <td>@x.CarModel</td>
+                    <td>@x.TotalAmount</td>
+                    <td>@x.PaymentMethod</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

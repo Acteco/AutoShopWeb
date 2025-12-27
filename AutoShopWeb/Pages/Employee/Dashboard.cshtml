@@ -1,0 +1,50 @@
+﻿@page
+@model AutoShopWeb.Pages.Employee.DashboardModel
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Employee,Admin")]
+@{
+    ViewData["Title"] = "Панель сотрудника";
+}
+
+<h2 class="mb-3">Панель сотрудника</h2>
+
+<div class="row g-3">
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="text-muted">Авто в наличии</div>
+                <div class="fs-3 fw-bold">@Model.CarsInStock</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="text-muted">Договоров всего</div>
+                <div class="fs-3 fw-bold">@Model.ContractsTotal</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="text-muted">Оплат “Оплачен”</div>
+                <div class="fs-3 fw-bold">@Model.PaidCount</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="text-muted">Выручка (оплачено)</div>
+                <div class="fs-3 fw-bold">@Model.Revenue</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr class="my-4" />
+
+<div class="d-flex gap-2">
+    <a class="btn btn-outline-primary" href="/Employee/Cars">Автомобили (CRUD)</a>
+    <a class="btn btn-outline-primary" href="/Employee/Services">Услуги (CRUD)</a>
+</div>

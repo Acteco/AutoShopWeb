@@ -1,0 +1,50 @@
+﻿@page
+@model AutoShopWeb.Pages.Client.ProfileModel
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Client")]
+@{
+    ViewData["Title"] = "Профиль";
+}
+
+<h2 class="mb-3">Профиль</h2>
+
+@if (!string.IsNullOrWhiteSpace(Model.Success))
+{
+    <div class="alert alert-success">@Model.Success</div>
+}
+@if (!string.IsNullOrWhiteSpace(Model.Error))
+{
+    <div class="alert alert-danger">@Model.Error</div>
+}
+
+@if (Model.Client == null)
+{
+    <div class="alert alert-warning">Профиль не найден.</div>
+}
+else
+{
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="mb-2"><b>ФИО:</b> @Model.Client.LastName @Model.Client.FirstName @Model.Client.MiddleName</div>
+            <div class="mb-2"><b>Паспорт:</b> @Model.Client.PassportSeries @Model.Client.PassportNumber</div>
+            <div class="mb-3"><b>Дата рождения:</b> @Model.Client.BirthDate</div>
+
+            <form method="post" class="row g-3">
+                <div class="col-md-4">
+                    <label class="form-label">Телефон</label>
+                    <input class="form-control" asp-for="Phone" placeholder="+7 900 000-00-00" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Email</label>
+                    <input class="form-control" asp-for="Email" />
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Адрес</label>
+                    <input class="form-control" asp-for="Address" />
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-primary">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+}

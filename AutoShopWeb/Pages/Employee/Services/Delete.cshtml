@@ -1,0 +1,34 @@
+﻿@page
+@model AutoShopWeb.Pages.Employee.Services.DeleteModel
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Employee,Admin")]
+@{
+    ViewData["Title"] = "Удаление услуги";
+}
+
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="mb-0">Удаление услуги</h2>
+    <a class="btn btn-outline-secondary" href="/Employee/Services">К списку</a>
+</div>
+
+@if (!string.IsNullOrWhiteSpace(Model.Error))
+{
+    <div class="alert alert-danger">@Model.Error</div>
+}
+
+@if (Model.Service == null)
+{
+    <div class="alert alert-warning">Услуга не найдена.</div>
+}
+else
+{
+    <div class="alert alert-warning">
+        Удалить услугу <b>@Model.Service.ServiceType</b> (стоимость: @Model.Service.Cost)?
+    </div>
+
+    <form method="post" class="d-flex gap-2">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <button class="btn btn-danger" type="submit">Да, удалить</button>
+        <a class="btn btn-outline-secondary" href="/Employee/Services">Отмена</a>
+    </form>
+}

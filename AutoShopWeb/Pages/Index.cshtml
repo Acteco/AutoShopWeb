@@ -1,0 +1,31 @@
+﻿@page
+@model AutoShopWeb.Pages.IndexModel
+@{
+    ViewData["Title"] = "Главная";
+}
+
+<div class="p-4 bg-light rounded-3">
+    <h1 class="mb-2">AutoShop</h1>
+    <p class="mb-3 text-muted">Система автосалона: автомобили, договоры, оплаты, роли.</p>
+
+    <div class="d-flex gap-2 flex-wrap">
+        <a class="btn btn-primary" href="/Cars">Автомобили</a>
+
+        @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Client"))
+        {
+            <a class="btn btn-outline-primary" href="/Client/MyContracts">Мои договоры</a>
+            <a class="btn btn-outline-primary" href="/Client/MyPayments">Мои оплаты</a>
+            <a class="btn btn-outline-primary" href="/Client/Profile">Профиль</a>
+        }
+
+        @if (User.Identity?.IsAuthenticated == true && (User.IsInRole("Employee") || User.IsInRole("Admin")))
+        {
+            <a class="btn btn-outline-primary" href="/Employee/Dashboard">Панель сотрудника</a>
+        }
+
+        @if (User.Identity?.IsAuthenticated == true && User.IsInRole("Admin"))
+        {
+            <a class="btn btn-outline-dark" href="/Admin/Users">Пользователи</a>
+        }
+    </div>
+</div>

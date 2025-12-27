@@ -1,0 +1,100 @@
+﻿@page
+@model AutoShopWeb.Pages.Employee.Contracts.CreateModel
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Employee,Admin")]
+@{
+    ViewData["Title"] = "Создать договор";
+}
+
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="mb-0">Создать договор</h2>
+    <a class="btn btn-outline-secondary" href="/Employee/Contracts">К списку</a>
+</div>
+
+@if (!string.IsNullOrWhiteSpace(Model.Error))
+{
+    <div class="alert alert-danger">@Model.Error</div>
+}
+@if (!string.IsNullOrWhiteSpace(Model.Success))
+{
+    <div class="alert alert-success">@Model.Success</div>
+}
+
+<form method="post" class="card shadow-sm">
+    @Html.AntiForgeryToken()
+    <div class="card-body">
+        <div class="row g-3">
+
+            <div class="col-md-3">
+                <label class="form-label">Номер договора</label>
+                <input class="form-control" asp-for="ContractNumber" type="number" />
+                <div class="form-text">Должен быть уникальным (PK).</div>
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Дата</label>
+                <input class="form-control" asp-for="CreatedAt" type="date" />
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Способ оплаты (в договоре)</label>
+                <select class="form-select" asp-for="PaymentMethod">
+                    <option>Наличные</option>
+                    <option>Карта</option>
+                    <option>Перевод</option>
+                    <option>Онлайн</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Сумма договора</label>
+                <input class="form-control" asp-for="TotalAmount" type="number" step="0.01" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Клиент</label>
+                <select class="form-select" asp-for="ClientId">
+                    @foreach (var c in Model.Clients)
+                    {
+                        <option value="@c.Id">@c.Text</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Сотрудник</label>
+                <select class="form-select" asp-for="EmployeeId">
+                    @foreach (var e in Model.Employees)
+                    {
+                        <option value="@e.Id">@e.Text</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Автомобиль (лучше выбирать “В наличии”)</label>
+                <select class="form-select" asp-for="CarId">
+                    @foreach (var car in Model.Cars)
+                    {
+                        <option value="@car.Id">@car.Text</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label">Услуга (необязательно)</label>
+                <select class="form-select" asp-for="ServiceId">
+                    <option value="">(нет)</option>
+                    @foreach (var s in Model.Services)
+                    {
+                        <option value="@s.Id">@s.Text</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-12">
+                <button class="btn btn-primary w-100" type="submit">Создать договор</button>
+            </div>
+
+        </div>
+    </div>
+</form>

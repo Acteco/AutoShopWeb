@@ -1,0 +1,64 @@
+﻿@page
+@model AutoShopWeb.Pages.Employee.ServicesCrudModel
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Employee,Admin")]
+@{
+    ViewData["Title"] = "Услуги (CRUD)";
+}
+
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="mb-0">Услуги</h2>
+    <a class="btn btn-outline-secondary" href="/Employee/Dashboard">Назад</a>
+</div>
+
+@if (!string.IsNullOrWhiteSpace(Model.Message))
+{
+    <div class="alert alert-info">@Model.Message</div>
+}
+
+<div class="card shadow-sm mb-3">
+    <div class="card-body">
+        <form method="post" asp-page-handler="Create" class="row g-2 align-items-end">
+            @Html.AntiForgeryToken()
+
+            <div class="col-md-8">
+                <label class="form-label">Название услуги</label>
+                <input class="form-control" asp-for="CreateServiceType" />
+            </div>
+
+            <div class="col-md-2">
+                <label class="form-label">Стоимость</label>
+                <input class="form-control" asp-for="CreateCost" type="number" step="0.01" />
+            </div>
+
+            <div class="col-md-2">
+                <button class="btn btn-primary w-100" type="submit">Добавить</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table table-striped table-hover align-middle">
+    <thead>
+        <tr>
+            <th style="width:80px">ID</th>
+            <th>Услуга</th>
+            <th style="width:180px">Стоимость</th>
+            <th style="width:220px" class="text-end">Действия</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var s in Model.Services)
+        {
+            <tr>
+                <td>@s.ServiceId</td>
+                <td>@s.ServiceType</td>
+                <td>@s.Cost</td>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-outline-primary" href="/Employee/Services/Edit?id=@s.ServiceId">Редактировать</a>
+                    <a class="btn btn-sm btn-outline-danger" href="/Employee/Services/Delete?id=@s.ServiceId">Удалить</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
